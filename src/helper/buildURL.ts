@@ -1,6 +1,6 @@
-import { isDate, isObject } from './utils'
+import { isDate, isPlainObject } from './utils'
 
-function encode (val: string): string {
+function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
@@ -11,14 +11,14 @@ function encode (val: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function buildURL (url: string, params?: any) {
+export function buildURL(url: string, params?: any) {
   if (!params) {
     return url
   }
 
   const parts: string[] = []
 
-  Object.keys(params).forEach((key) => {
+  Object.keys(params).forEach(key => {
     let val = params[key]
     if (val === null || typeof val === 'undefined') {
       return
@@ -30,10 +30,10 @@ export function buildURL (url: string, params?: any) {
     } else {
       values = [val]
     }
-    values.forEach((val) => {
+    values.forEach(val => {
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)

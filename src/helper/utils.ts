@@ -4,6 +4,13 @@ export function isDate(val: any): val is Date {
   return toString.call(val) === '[object Date]'
 }
 export function isObject(val: any): val is Object {
+  return val !== null && typeof val === 'object'
+}
+/**
+ *
+ * @desc 判断object
+ */
+export function isPlainObject(val: any): val is Object {
   return toString.call(val) === '[object Object]'
 }
 export function isNumber(val: any): val is number {
@@ -17,16 +24,14 @@ export function forEach(obj: any, callback: Function): void {
   if (typeof obj !== 'object') {
     obj = [obj]
   }
-  if(Array.isArray(obj)){
+  if (Array.isArray(obj)) {
     for (let index = 0; index < obj.length; index++) {
-      callback.call(null,obj[index],index,obj)
-      
+      callback.call(null, obj[index], index, obj)
     }
-  }else{
+  } else {
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        callback.call(null,obj[key],key,obj)
-        
+        callback.call(null, obj[key], key, obj)
       }
     }
   }
