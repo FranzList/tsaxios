@@ -10,7 +10,7 @@ export function isObject(val: any): val is Object {
  *
  * @desc 判断object
  */
-export function isPlainObject(val: any): val is Object {
+export function isPlainObject(val: any): val is any {
   return toString.call(val) === '[object Object]'
 }
 export function isNumber(val: any): val is number {
@@ -35,4 +35,10 @@ export function forEach(obj: any, callback: Function): void {
       }
     }
   }
+}
+export function extend<T, U>(to: T, form: U): T & U {
+  for (const key in form) {
+    ;(to as T & U)[key] = form[key] as any
+  }
+  return to as T & U
 }
